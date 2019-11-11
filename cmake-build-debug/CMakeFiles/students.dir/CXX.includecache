@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/kdimitrov/CLionProjects/students/cmake-build-debug/CMakeFiles/Grades.cpp
+string
+-
+Grades.h
+C:/Users/kdimitrov/CLionProjects/students/cmake-build-debug/CMakeFiles/Grades.h
+
+C:/Users/kdimitrov/CLionProjects/students/cmake-build-debug/CMakeFiles/Grades.h
+

@@ -6,7 +6,7 @@
 
 void calculateValues(const string &group, int term, Student &student, int &max, int &min);
 
-string &extractResult(int max, int min, string &result, const string &group, int term);
+string &extractResult(double max, double min, const string &group, int term);
 
 int main() {
     std::cout << "Welcome!" << std::endl;
@@ -103,7 +103,7 @@ int main() {
             avg_max = thiz_max / students_count;
             avg_min = thiz_min / students_count;
 
-            result_3 = extractResult(avg_max, avg_min, result_3, group, term);
+            result_3 = extractResult(avg_max, avg_min, group, term);
             cout << result_3;
             util->toFile(result_3);
 
@@ -174,7 +174,8 @@ int main() {
     } while (true);
 }
 
-string &extractResult(double max, double min, string &result, const string &group, int term) {
+string &extractResult(double max, double min, const string &group, int term) {
+    string result;
     result = "";
     result += "Max success rate for group " + group + " for semester " + to_string(term) + " is " +
               to_string(max) + "\n";

@@ -7,9 +7,9 @@
 #include <fstream>
 #include "Util.h"
 
-void Util::toFile(const std::string& info) {
-    std::ofstream outfile("test.txt");
-
+void Util::toFile(const std::string &info) {
+    std::ofstream outfile;
+    outfile.open("test.txt", std::ios_base::app);
     outfile << info << std::flush;
 
     outfile.close();

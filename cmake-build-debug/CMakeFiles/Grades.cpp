@@ -57,8 +57,8 @@ int Grades::getMin(int term) {
 std::string Grades::getStatistics(int term) {
     std::string result;
     result += "Average: " + std::to_string(getAverageRate(term)) + "\n";
-    result += "Min: " + std::to_string(getMin(term)) + "\n";
-    result += "Max: " + std::to_string(getMax(term)) + "\n";
+    result += "\t\tMin: " + std::to_string(getMin(term)) + "\n";
+    result += "\t\tMax: " + std::to_string(getMax(term)) + "\n";
 
     return result;
 }

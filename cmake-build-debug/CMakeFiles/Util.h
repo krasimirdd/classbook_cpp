@@ -11,11 +11,11 @@
 
 class Util {
 public:
-    void toFile(const std::string& info);
+    static void toFile(const std::string &info);
 
-    int menu();
+    static int menu();
 
-    bool isValid(int arg);
+    static bool isValid(int arg);
 
 };
 

@@ -70,14 +70,16 @@ void Student::setName() {
 string Student::getInfo() {
     string result;
 
-    result += "\nName: " + getName() + "\n";
-    result += "Faculty: " + getFactultyName() + "\n";
-    result += "FacultyNumber: " + getFacultyId() + "\n";
-    result += "Group: " + getGroup() + "\n";
-    result += "1st term : \n";
-    result += "\t" + grades.getStatistics(1);
-    result += "2nd term : \n";
-    result += "\t" + grades.getStatistics(2);
+    result += "\n  Information for student:";
+    result += "\n\tName: " + getName() + "\n";
+    result += "\tFaculty: " + getFactultyName() + "\n";
+    result += "\tFacultyNumber: " + getFacultyId() + "\n";
+    result += "\tGroup: " + getGroup() + "\n";
+    result += "\t1st term : \n";
+    result += "\t\t" + grades.getStatistics(1);
+    result += "\t2nd term : \n";
+    result += "\t\t" + grades.getStatistics(2);
+    result += "----------------------------------------------\n";
 
     return result;
 }

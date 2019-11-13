@@ -6,13 +6,12 @@
 
 void calculateValues(const string &group, int term, Student &student, int &max, int &min);
 
-string &extractResult(double max, double min, const string &group, int term);
+string extractResult(double max, double min, const string &group, int term);
 
 int main() {
     std::cout << "Welcome!" << std::endl;
 
-    Util *util = new Util();
-    int option = util->menu();
+    int option = Util::menu();
     list<Student> storage;
     list<string> groups;
 
@@ -41,6 +40,8 @@ int main() {
             }
             groups.unique();
 
+            result += "\n------------------------------- \naverage rate of every group for term " + to_string(term) +
+                      " : \n";
             for (const string &group : groups) {
 
                 double total_success_for_group = 0;
@@ -53,11 +54,12 @@ int main() {
                     }
                 }
                 result +=
-                        "Group " + group + " - " + to_string(total_success_for_group / students_count_in_group) + "\n";
+                        "\tGroup " + group + " - " + to_string(total_success_for_group / students_count_in_group) +
+                        "\n";
             }
-            util->toFile(result);
-            cout << result;
 
+            Util::toFile(result);
+            cout << result;
 
         } else if (option == 3) {
 
@@ -75,37 +77,28 @@ int main() {
 
             double avg_max = 1;
             double avg_min = 7;
-            double thiz_max = 0;
-            double thiz_min = 0;
-            int students_count = 0;
-
-            for (int j = 0; j < storage.size(); j++) {
+            int end = storage.size();
+            for (int j = 0; j < end; j++) {
                 Student thiz = storage.back();
 
                 temp_storage_3.emplace_back(thiz);
                 storage.pop_back();
 
-                thiz_max = 0;
-                thiz_min = 0;
                 double curr_avr;
                 if (thiz.getGroup() == group) {
                     curr_avr = thiz.getGrades().getAverageRate(term);
-                    if (curr_avr > thiz_max) {
-                        thiz_max += curr_avr;
+                    if (curr_avr >= avg_max) {
+                        avg_max = curr_avr;
                     }
-                    if (curr_avr < thiz_min) {
-                        thiz_min += curr_avr;
+                    if (curr_avr <= avg_min) {
+                        avg_min = curr_avr;
                     }
-
-                    students_count++;
                 }
             }
-            avg_max = thiz_max / students_count;
-            avg_min = thiz_min / students_count;
 
             result_3 = extractResult(avg_max, avg_min, group, term);
             cout << result_3;
-            util->toFile(result_3);
+            Util::toFile(result_3);
 
             storage.assign(temp_storage_3.begin(), temp_storage_3.end());
             temp_storage_3.erase(temp_storage_3.begin(), temp_storage_3.end());
@@ -122,7 +115,7 @@ int main() {
 
                 cout << thiz.getInfo();
                 cout << "----------------------------------------------" << endl;
-                util->toFile(thiz.getInfo());
+                Util::toFile(thiz.getInfo());
             }
             storage.assign(temp_storage_4.begin(), temp_storage_4.end());
             temp_storage_4.erase(temp_storage_4.begin(), temp_storage_4.end());
@@ -142,9 +135,10 @@ int main() {
             groups.unique();
             if ((std::find(groups.begin(), groups.end(), group) != groups.end())) {
 
+                result_5 += "Information for group for term " + to_string(term) +" : \n";
                 for (const string &gr : groups) {
                     if (group == gr) {
-                        result_5 += "Group " + gr + ": \n";
+                        result_5 += "\tGroup " + gr + ": \n";
 
                         for (Student &std : storage) {
                             if (std.getGroup() == gr) {
@@ -155,7 +149,7 @@ int main() {
                 }
 
                 cout << result_5;
-                util->toFile(result_5);
+                Util::toFile(result_5);
             } else {
                 cout << "Error! Could not find such a group in the records\n\n";
             }
@@ -170,11 +164,11 @@ int main() {
 
         }
 
-        option = util->menu();
+        option = Util::menu();
     } while (true);
 }
 
-string &extractResult(double max, double min, const string &group, int term) {
+string extractResult(double max, double min, const string &group, int term) {
     string result;
     result = "";
     result += "Max success rate for group " + group + " for semester " + to_string(term) + " is " +

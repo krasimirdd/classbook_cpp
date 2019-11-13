@@ -62,8 +62,6 @@ int main() {
         } else if (option == 3) {
 
             cout << "For MIN and MAX rate enter group number and term [1 | 2]" << endl;
-            auto max = INT_MIN;
-            auto min = INT_MAX;
             string result_3;
             string group;
             int term;
@@ -75,6 +73,11 @@ int main() {
             }
             list<Student> temp_storage_3;
 
+            double avg_max = 1;
+            double avg_min = 7;
+            double thiz_max = 0;
+            double thiz_min = 0;
+            int students_count = 0;
 
             for (int j = 0; j < storage.size(); j++) {
                 Student thiz = storage.back();
@@ -82,10 +85,25 @@ int main() {
                 temp_storage_3.emplace_back(thiz);
                 storage.pop_back();
 
-                calculateValues(group, term, thiz, max, min);
+                thiz_max = 0;
+                thiz_min = 0;
+                double curr_avr;
+                if (thiz.getGroup() == group) {
+                    curr_avr = thiz.getGrades().getAverageRate(term);
+                    if (curr_avr > thiz_max) {
+                        thiz_max += curr_avr;
+                    }
+                    if (curr_avr < thiz_min) {
+                        thiz_min += curr_avr;
+                    }
 
+                    students_count++;
+                }
             }
-            result_3 = extractResult(max, min, result_3, group, term);
+            avg_max = thiz_max / students_count;
+            avg_min = thiz_min / students_count;
+
+            result_3 = extractResult(avg_max, avg_min, result_3, group, term);
             cout << result_3;
             util->toFile(result_3);
 
@@ -156,7 +174,7 @@ int main() {
     } while (true);
 }
 
-string &extractResult(int max, int min, string &result, const string &group, int term) {
+string &extractResult(double max, double min, string &result, const string &group, int term) {
     result = "";
     result += "Max success rate for group " + group + " for semester " + to_string(term) + " is " +
               to_string(max) + "\n";
@@ -164,21 +182,4 @@ string &extractResult(int max, int min, string &result, const string &group, int
               to_string(min) + "\n";
     result += "----------------------------------------------\n";
     return result;
-}
-
-void calculateValues(const string &group, int term, Student &student, int &max, int &min) {
-    int thiz_max;
-    int thiz_min;
-
-    if (student.getGroup() == group) {
-        thiz_max = student.getGrades().getMax(term);
-        thiz_min = student.getGrades().getMin(term);
-
-        if (thiz_max > max) {
-            max = thiz_max;
-        }
-        if (thiz_min < min) {
-            min = thiz_min;
-        }
-    }
 }
